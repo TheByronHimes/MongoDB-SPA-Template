@@ -1,5 +1,5 @@
-<h1>FastAPI & MongoDB Template</h1>
-Use this to quickly start a project with FastAPI and MongoDB through Docker.
+<h1>FastAPI & MongoDB Template with React</h1>
+Use this to quickly start a single-page app with FastAPI and MongoDB through Docker.
 <br>
 <h2>Instructions</h2>
 <ol>
