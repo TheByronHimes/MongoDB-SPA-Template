@@ -1,5 +1,7 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 from pymongo import MongoClient
 
 # Import Username & Password from container env vars
@@ -13,8 +15,9 @@ client = MongoClient(
 
 # Set up the FastAPI entrypoint
 app = FastAPI()
+app.mount("/static", StaticFiles(directory="../static"), name="static")
+templates = Jinja2Templates(directory="../templates")
 
 @app.get("/")
-async def root():
-    msg = "Hello World!"
-    return {"msg": msg}
+async def root(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})

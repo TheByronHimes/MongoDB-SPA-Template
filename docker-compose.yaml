@@ -4,7 +4,7 @@ services:
     build: .
     links:
       - mongodb
-    container_name: practice-container
+    container_name: template-app
     env_file:
       - ".env"
     environment:
@@ -14,14 +14,15 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - .:/app
-      - ./src:/app/src
+      - .:/app:consistent
+      - ./static:/app/static:consistent
     depends_on:
       - mongodb
+      - frontend
     
 
   mongodb:
-    container_name: mongo
+    container_name: template-mongo
     image: mongo:latest
     restart: unless-stopped
     env_file:
@@ -32,3 +33,10 @@ services:
     ports:
       - "27017:27017"
 
+  frontend:
+    build: ./node
+    container_name: template-node
+    command: npm run dev
+    volumes: 
+      - ./static:/app/static:consistent
+      - ./node/assets:/app/assets
